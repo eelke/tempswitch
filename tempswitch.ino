@@ -107,7 +107,7 @@ void handleTemperature(float temp)
   //  During development, set edges around current environment temperature
   if (!rangeHasBeenSet)
   {
-    rangeUpperEdge = temp + 4.0f;
+    rangeUpperEdge = temp + 2.0f;
     rangeLowerEdge = temp + 1.0f;
     rangeHasBeenSet = true;
     cooling = false;
