@@ -1,0 +1,33 @@
+-- TemperatureSwitch app, based on PT100 / Arduino --
+-- Code: eelke.net --
+
+
+# Set up the Arduino
+
+Change these values:
+
+```
+float rangeLowerEdge = 0.0f;  ==> your lower edge
+float rangeUpperEdge = 0.0f; ==> your upper edge
+bool rangeHasBeenSet = false; ==> true
+```
+
+The relay will turn ON whenever the temperature has reached the UPPER edge (or above)
+And it will turn OFF whenever the temparature has reached the BOTTOM edge (or below)
+
+
+# Set up the server (node app)
+
+1. Run:
+> $ node server.js
+This will start the server and load a browser window
+
+2. Use PM2 to keep the Node.js process running..
+https://www.digitalocean.com/community/tutorials/nodejs-pm2
+
+
+# Note 
+The Arduino code will run regardless of a serial connection.
+The Node app is just to monitor & log its behaviour
+
+

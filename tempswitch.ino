@@ -17,6 +17,8 @@ const int relayPin = 2;
 float rangeLowerEdge = 0.0f;
 float rangeUpperEdge = 0.0f;
 bool rangeHasBeenSet = false;
+int interval = 2000; // Frequency of updates
+
 bool cooling = false;
 
 void setup()
@@ -40,7 +42,7 @@ void loop()
   handleTemperature(thermo.temperature(RNOMINAL, RREF));
   report(ratio);
 
-  delay(500);
+  delay(interval);
 }
 
 void report(float ratio){
