@@ -1,0 +1,6 @@
+{
+    "port": "/dev/tty.usbmodem1442201",
+    "board": "arduino:avr:uno",
+    "sketch": "tempswitch.ino",
+    "programmer": "arduino:avrisp"
+}

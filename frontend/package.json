@@ -1,0 +1,33 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint 'src/**/*.{html,js,svelte}'",
+    "lint:fix": "eslint --fix 'src/**/*.{html,js,svelte}'"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "attractions": "^3.3.0",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-svelte": "^2.3.0",
+    "svelte": "^3.52.0",
+    "svelte-eslint-parser": "^0.17.0",
+    "svelte-preprocess": "^4.10.1",
+    "vite": "^3.2.3"
+  },
+  "dependencies": {
+    "eslint-scope": "^5.1.1",
+    "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3",
+    "typescript": "^4.7.3",
+    "typescript-eslint": "^0.0.1-alpha.0"
+  }
+}
