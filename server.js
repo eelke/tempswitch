@@ -1,8 +1,14 @@
+/** Settings */
+const expressHost = 'localhost';
+const expressPort = 3000;
+const serialDevice = '/dev/tty.usbmodem1442201';
+
+// Set to true if you want to log every message from the Arduino; false to only log the relay toggles
+const logAll = true; 
+
 // Express & Socket
 const express = require('express')
 const app = express()
-const expressHost = 'localhost'
-const expressPort = 3000
 const path = require('path');
 const http = require('http').Server(app)
 const io = require('socket.io')(http, {
@@ -15,7 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('frontend/dist'));
 
 let previousData = null;
-const logAll = true; // Set to true if you want to log every message from the Arduino; false to only log the relay toggles
 const fs = require('fs');
 const logFile = `logs/${new Date().toISOString()}.csv`;
 fs.writeFile(logFile, 'Time,Temp,Cooling\n', function (err) {
@@ -30,7 +35,7 @@ const liveData = io.of('/liveData');
 const { SerialPort } = require('serialport')
 const { ReadlineParser } = require('@serialport/parser-readline')
 const port = new SerialPort({
-  path: '/dev/tty.usbmodem1442201',
+  path: serialDevice,
   baudRate: 115200,
   autoOpen: false,
 })
