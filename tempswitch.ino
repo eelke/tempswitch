@@ -135,7 +135,8 @@ void handleTemperature(float temp)
   }
 
   // We use NC (Normally Closed) output of the relay
-  // So the compressor is disabled, except when we set the pin to HIGH
-  digitalWrite(relayPin, !cooling);
+  // The compressor is disabled when we set the pin to LOW
+  // And enabled when set to HIGH
+  digitalWrite(relayPin, cooling);
   
 }
