@@ -4,12 +4,12 @@
 
 # Set up the Arduino
 
-Change these values:
+These are the temperature edges used. Comment these lines out to have the program run in demo mode.
+In demo mode the app picks edges around the current environment temperature instead.
 
 ```
-float rangeLowerEdge = 0.0f;  ==> your lower edge
-float rangeUpperEdge = 0.0f; ==> your upper edge
-bool rangeHasBeenSet = false; ==> true
+//#define LOWER_EDGE_CELCIUS -3.5f;
+//#define UPPER_EDGE_CELCIUS -2.0f;
 ```
 
 The relay will turn ON whenever the temperature has reached the UPPER edge (or above)
@@ -29,5 +29,6 @@ https://www.digitalocean.com/community/tutorials/nodejs-pm2
 # Note 
 The Arduino code will run regardless of a serial connection.
 The Node app is just to monitor & log its behaviour
+You can safely close browser the window, and the server will keep on logging.  
 
 
