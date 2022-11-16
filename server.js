@@ -1,7 +1,7 @@
 /** Settings */
 const expressHost = 'localhost';
 const expressPort = 3000;
-const serialDeviceSearch = '/dev/tty.usbmodem';
+const serialDeviceSearch = '/dev/tty.usbmodem'; // The serial port identifier may change.  
 let serialDevice;
 
 // Set to true if you want to log every message from the Arduino; false to only log the relay toggles

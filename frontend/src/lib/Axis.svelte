@@ -3,7 +3,6 @@
     import { select } from 'd3-selection';
     import { axisBottom, axisLeft } from 'd3-axis';
 
-
     export let innerHeight;
     export let margin;
     export let position;
@@ -35,3 +34,15 @@
 </script>
 
 <g class="axis" bind:this={g} {transform} />
+
+<style>
+  :global(.axis text) {
+    color: white;
+  }
+  @media (prefers-color-scheme: light) {
+    :global(.axis text) {
+      color: #213547;
+    }
+  }
+</style>
+

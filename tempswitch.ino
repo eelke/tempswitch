@@ -2,6 +2,14 @@
 #define ARDUINOJSON_USE_LONG_LONG 1
 #include <ArduinoJson.h>
 
+// These are the temperature edges used. Comment these lines out to have the program run in demo mode.
+// In demo mode the app picks edges around the current environment temperature instead.
+//#define LOWER_EDGE_CELCIUS -3.5f;
+//#define UPPER_EDGE_CELCIUS -2.0f;
+
+// Run logic & log ever N ms
+#define LOOP_INTERVAL 2000
+
 // Use software SPI: CS, DI, DO, CLK
 Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 12, 13);
 
@@ -12,12 +20,19 @@ Adafruit_MAX31865 thermo = Adafruit_MAX31865(10, 11, 12, 13);
 // 100.0 for PT100, 1000.0 for PT1000
 #define RNOMINAL 100.0
 
+// Pin the relays connects to
 const int relayPin = 2;
 
-float rangeLowerEdge = 0.0f;
-float rangeUpperEdge = 0.0f;
+// Variables
+#ifdef LOWER_EDGE_CELCIUS &&UPPER_EDGE_CELCIUS
+float rangeLowerEdge = LOWER_EDGE_CELCIUS; // in ºC
+float rangeUpperEdge = UPPER_EDGE_CELCIUS; // in ºC
+bool rangeHasBeenSet = true;
+#else
+float rangeLowerEdge = 0.0f; // in ºC
+float rangeUpperEdge = 0.0f; // in ºC
 bool rangeHasBeenSet = false;
-int interval = 2000; // Frequency of updates
+#endif
 
 bool cooling = false;
 
@@ -42,10 +57,11 @@ void loop()
   handleTemperature(thermo.temperature(RNOMINAL, RREF));
   report(ratio);
 
-  delay(interval);
+  delay(LOOP_INTERVAL);
 }
 
-void report(float ratio){
+void report(float ratio)
+{
 
   StaticJsonDocument<400> doc;
 
@@ -138,5 +154,4 @@ void handleTemperature(float temp)
   // The compressor is disabled when we set the pin to LOW
   // And enabled when set to HIGH
   digitalWrite(relayPin, cooling);
-  
 }

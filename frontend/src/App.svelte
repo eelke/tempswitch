@@ -32,3 +32,5 @@
 </div>
 
 <Graph {lowerEdge} {upperEdge}/>
+
+<small>Built by <a href='https://eelke.net/' title='eelke.net'>eelke.net</a> for Climate Cleanup</small>

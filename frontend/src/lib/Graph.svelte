@@ -1,11 +1,6 @@
 <script>
   import {
-    csv,
-    extent,
-    scaleLinear,
-    scaleTime,
-    line,
-    curveNatural,
+    csv, extent, scaleLinear, scaleTime, line, curveBasis,
   } from 'd3';
 
   import { onDestroy, onMount } from 'svelte';
@@ -37,10 +32,9 @@
   });
 
   const loadData = async () => {
-    dataset = await csv(
-      'http://localhost:3000/log',
-      parseRow,
-    ).then((data) => data);
+    dataset = await csv('http://localhost:3000/log', parseRow).then(
+      (data) => data,
+    );
   };
 
   $: periods = groupPeriods(dataset);
@@ -63,7 +57,10 @@
   };
 
   const margin = {
-    top: 15, bottom: 50, left: 50, right: 20,
+    top: 15,
+    bottom: 50,
+    left: 50,
+    right: 20,
   };
   const width = 900;
   const height = 600;
@@ -71,58 +68,74 @@
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
-
   $: xScale = scaleTime()
     .domain(extent(dataset, (d) => d.Time))
     .range([0, innerWidth])
     .nice();
 
   $: yScale = scaleLinear()
-    .domain(extent(dataset, (d) => d.Temp))
+    // Make sure to include the edge temps in the graph scale
+    .domain(extent(dataset.concat([{ Temp: lowerEdge }, { Temp: upperEdge }]), (d) => d.Temp))
     .range([innerHeight, 0])
     .nice();
 
   $: plottedGraph = line()
-    .curve(curveNatural)
+    .curve(curveBasis)
     .x((d) => xScale(d.Time))
     .y((d) => yScale(d.Temp))(dataset);
 
   $: plottedCoolingGraphs = periods.map((period) => line()
-    .curve(curveNatural)
+    .curve(curveBasis)
     .x((d) => xScale(d.Time))
     .y((d) => yScale(d.Temp))(period));
 
   $: lowerEdgeLine = yScale(lowerEdge);
   $: upperEdgeLine = yScale(upperEdge);
-
-
-
 </script>
 
 <main>
-  <svg {width} {height}>
-    <g transform={`translate(${margin.left},${margin.top})`}>
-      <Axis {innerHeight} {margin} scale={xScale} position="bottom" />
-      <Axis {innerHeight} {margin} scale={yScale} position="left" />
-      <text transform={`translate(${-30},${innerHeight / 2}) rotate(-90)`}
-        >Temperature</text
+  <svg width="{width}" height="{height}" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" >
+    <g transform="{`translate(${margin.left},${margin.top})`}">
+      <Axis
+        innerHeight="{innerHeight}"
+        margin="{margin}"
+        scale="{xScale}"
+        position="bottom"
+      />
+      <Axis
+        innerHeight="{innerHeight}"
+        margin="{margin}"
+        scale="{yScale}"
+        position="left"
+      />
+      <text transform="{`translate(${-35},${innerHeight / 2}) rotate(-90)`}"
+        >Temperature ºC</text
       >
-      <line class="lowerEdge" x1={0} y1={lowerEdgeLine} x2={innerWidth} y2={lowerEdgeLine} />
-      <line class="upperEdge" x1={0} y1={upperEdgeLine} x2={innerWidth} y2={upperEdgeLine} />
-
-      <path d={plottedGraph} />
+      <line
+        class="lowerEdge"
+        x1="{0}"
+        y1="{lowerEdgeLine}"
+        x2="{innerWidth}"
+        y2="{lowerEdgeLine}"></line>
+      <line
+        class="upperEdge"
+        x1="{0}"
+        y1="{upperEdgeLine}"
+        x2="{innerWidth}"
+        y2="{upperEdgeLine}"></line>
 
       {#each plottedCoolingGraphs as graph}
-        <path class="cooling" d={graph} />
+        <path class="cooling" d="{graph}"></path>
       {/each}
 
-      <text x={innerWidth / 2} y={innerHeight + 35}>Timestamp</text>
+      <path d="{plottedGraph}"></path>
+
+      <text x="{innerWidth / 2}" y="{innerHeight + 35}">Time</text>
     </g>
   </svg>
 </main>
 
 <style>
-
   .lowerEdge {
     stroke: blue;
     stroke-width: 1;
@@ -135,24 +148,41 @@
     stroke-dasharray: 2px 2px;
   }
 
-
-
-  path, line {
+  path {
     fill: transparent;
-    stroke: rgb(18, 153, 90);
+    stroke: white;
+
     stroke-width: 2.5;
     stroke-linejoin: round;
   }
 
   .cooling {
     stroke: rgba(0, 55, 255, 1);
-    stroke-width: 5;
+    stroke-width: 10;
     opacity: 1;
   }
-
   svg {
     width: 100%;
     height: auto;
   }
-</style>
 
+  text {
+    fill: white;
+    font-size: 14px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    path {
+      stroke: rgb(18, 153, 90);
+    }
+    .cooling {
+      stroke: rgba(0, 55, 255, 1);
+      stroke-width: 5;
+      opacity: 0.75;
+    }
+
+    text {
+      fill: #213547;
+    }
+  }
+</style>
