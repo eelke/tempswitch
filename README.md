@@ -1,8 +1,10 @@
--- TemperatureSwitch app, based on PT100 / Arduino --
--- Code: eelke.net --
+# TempSwitch for Climate Cleanup
+
+A temperature-based physical relais (electrical switch) application, based on PT100, Arduino, Node.js & svelte.js
 
 
-# Set up the Arduino
+
+## Set up the Arduino
 
 These are the temperature edges used. Comment these lines out to have the program run in demo mode.
 In demo mode the app picks edges around the current environment temperature instead.
@@ -18,17 +20,19 @@ And it will turn OFF whenever the temparature has reached the BOTTOM edge (or be
 
 # Set up the server (node app)
 
-1. Run:
-> $ node server.js
-This will start the server and load a browser window
+1. Run `$ node server.js`, this will start the server and load a browser window
 
 2. Use PM2 to keep the Node.js process running..
 https://www.digitalocean.com/community/tutorials/nodejs-pm2
 
+---
 
-# Note 
+## Note 
+
 The Arduino code will run regardless of a serial connection.
 The Node app is just to monitor & log its behaviour
 You can safely close browser the window, and the server will keep on logging.  
+
+By eelke.net, for ClimateCleanup.org
 
 
