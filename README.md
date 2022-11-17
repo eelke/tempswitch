@@ -6,6 +6,10 @@ A temperature-based physical relais (electrical switch) application, based on PT
 
 ## Set up the Arduino
 
+Make sure you install the required libraries:
+- Adafruit_MAX31865
+- ArduinoJson
+
 These are the temperature edges used. Comment these lines out to have the program run in demo mode.
 In demo mode the app picks edges around the current environment temperature instead.
 
@@ -18,7 +22,7 @@ The relay will turn ON whenever the temperature has reached the UPPER edge (or a
 And it will turn OFF whenever the temparature has reached the BOTTOM edge (or below)
 
 
-# Set up the server (node app)
+## Set up the server (node app)
 
 1. Run `$ npm install` to install all dependencies
 
