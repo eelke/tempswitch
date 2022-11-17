@@ -20,9 +20,11 @@ And it will turn OFF whenever the temparature has reached the BOTTOM edge (or be
 
 # Set up the server (node app)
 
-1. Run `$ node server.js`, this will start the server and load a browser window
+1. Run `$ npm install` to install all dependencies
 
-2. Use PM2 to keep the Node.js process running..
+2. Run `$ node server.js`, this will start the server and load a browser window
+
+3. Use PM2 to keep the Node.js process running..
 https://www.digitalocean.com/community/tutorials/nodejs-pm2
 
 ---
