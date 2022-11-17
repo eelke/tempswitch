@@ -1,6 +1,6 @@
 # TempSwitch for Climate Cleanup
 
-A temperature-based physical relais (electrical switch) application, based on PT100, Arduino, Node.js & svelte.js
+A temperature-based physical relay (electrical switch) application, based on PT100, Arduino, Node.js & svelte.js
 
 
 
